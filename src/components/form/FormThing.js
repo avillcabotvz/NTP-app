@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Form, FormControl, Row, Col, Button, Spinner, Container } from 'react-bootstrap'
+import { Form, Col, Button, Container } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
+import { apiPost } from '../../api';
 
 class FormThing extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class FormThing extends Component {
     return (
       <Container style={{padding: "100px"}}>
         <h1>Insert task</h1>
-        <Form class onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <Form.Row>
             <Form.Group as={Col} controlId="task_name">
               <Form.Label column sm={2}>
@@ -116,28 +117,18 @@ class FormThing extends Component {
     )
   }
 
-  handleSubmit(ev) {
+  async handleSubmit(ev) {
     ev.preventDefault();
+
     console.log('Form data: ', this.state.formData);
+
+    // No need to reload! First wait for the task to actually be inserted!
+    // Also on the server, don't return a string when the api expects JSON
+    // Otherwise you get errors
+    await apiPost('/tasks', this.state.formData);
+
     this.props.history.push('/');
-
-    fetch('http://localhost:2000/tasks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state.formData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-      window.location.reload(true);
-
-
+    // No reload!
   }
   
   handleFormChange(ev) {

@@ -1,6 +1,6 @@
-
 import React, { Component } from 'react'
-import {Spinner} from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
+import { apiGet } from '../../api';
 import FormThing from './FormThing'
 
 export default class FormFunctions extends Component {
@@ -9,51 +9,48 @@ export default class FormFunctions extends Component {
     super(props);
     this.state = {
       loading: true,
-      categories: { data: [], loading: true },
-      person: { data: [], loading: true },
-      status: { data: [], loading: true },
+      categories: [],
+      persons: [],
+      status: [],
     }
   }
 
-
   async componentDidMount() {
-    async function GetAPI(url) {
-      const response = await fetch(url);
-      const data = await response.json();
-      return data;
-    }
+    this.fetchData();
+  }
+
+  async fetchData() {
+    this.setState({ loading: true });
+
+    const [categories, persons, status] = await Promise.all([
+      apiGet('/categories'),
+      apiGet('/person'),
+      apiGet('/status'),
+    ]);
 
     this.setState({
-      categories: { data: await GetAPI('http://localhost:2000/categories'), loading: false },
-      person: { data: await GetAPI('http://localhost:2000/person'), loading: false },
-      status: { data: await GetAPI('http://localhost:2000/status'), loading: false },
-    })
-
-
+      loading: false,
+      categories,
+      persons,
+      status
+    });
   }
 
   render() {
-
-    if (this.state.categories.loading && this.state.person.loading && this.state.status.loading) {
+    if (this.state.loading) {
       return (
         <Spinner animation="border" role="status">
           <span className="sr-only">Loading...</span>
         </Spinner>
-
-      )
-    }
-    if (!(this.state.categories.loading && this.state.person.loading && this.state.status.loading)) {
-      const status = this.state.status.data;
-      const persons = this.state.person.data;
-      const categories = this.state.categories.data;
-      this.state.person.loading = false
-      return (
-        <div>
-          <FormThing status={status} persons={persons} categories={categories} ></FormThing>
-        </div>
-      )
+      );
     }
 
+    const { status, persons, categories } = this.state;
 
+    return (
+      <div>
+        <FormThing status={status} persons={persons} categories={categories} />
+      </div>
+    );
   }
 }
