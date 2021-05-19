@@ -19,9 +19,11 @@ class FormThing extends Component {
     const status = this.props.status;
     const persons = this.props.persons;
     const categories = this.props.categories;
+    console.log(this.props);
 
 
     return (
+      
       <Container style={{padding: "100px"}}>
         <h1>Insert task</h1>
         <Form onSubmit={handleSubmit}>

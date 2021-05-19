@@ -7,6 +7,7 @@ import Main from './components/main/Main'
 import Update from './components/form/Update';
 import Login from './components/auth/Login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import Status from './components/form/Status'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <ProtectedRoute path="/" component={Main} exact/>
           <ProtectedRoute path="/test" component={TestSite}/>
           <ProtectedRoute path="/update" component={Update}/>
+          <ProtectedRoute path="/status/:id" component={Status}/>
           <Route path="/login" component={Login} />
         </Switch>
       </Router>

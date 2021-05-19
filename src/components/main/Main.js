@@ -31,7 +31,7 @@ const Main = (props) => {
           <ButtonGroup size="lg" as={Col}>
               <Button variant="dark"> <FontAwesomeIcon icon={faUser} /><div className="button-text">Add Person</div></Button>
               <Button variant="dark"> <FontAwesomeIcon icon={faSitemap} /><div className="button-text">Add Category</div></Button>
-              <Button variant="dark"> <FontAwesomeIcon icon={faExclamationCircle} /><div className="button-text">Add Status</div></Button>
+              <Button as={Link} to="/status" variant="dark"> <FontAwesomeIcon icon={faExclamationCircle} /><div className="button-text">Add Status</div></Button>
               <ReactToPrint
                 trigger={() => 
                   <Button variant="dark"> <FontAwesomeIcon icon={faFile} /><div className="button-text">Generate PDF</div></Button>}

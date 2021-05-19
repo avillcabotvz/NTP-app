@@ -50,7 +50,6 @@ export default class FormFunctions extends Component {
     }
 
     const { status, persons, categories, tasks } = this.state;
-    
     if (this.props.edit === true) {
       return (
         <div>

@@ -8,9 +8,9 @@ class FormUpdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskid: 1,
+      taskid: 0,
       formData: {
-        ...(props.tasks[0] ?? {})
+        ...((this.props.location.state ? (this.props.tasks.find((task) => task.id === this.props.location.state)) : props.tasks[0])?? {})
       },
     };
   }

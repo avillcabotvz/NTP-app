@@ -1,7 +1,8 @@
 import React from 'react'
-import { Table, Spinner, Container } from 'react-bootstrap'
+import { Table, Spinner, Container, Button } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { apiGet } from '../../api';
+import {Link} from 'react-router-dom'
 
 export default class TableApi extends React.Component {
   constructor(props) {
@@ -50,6 +51,7 @@ export default class TableApi extends React.Component {
               <th>Status</th>
               <th>Category</th>
               <th>Person</th>
+              <th>...</th>
             </tr>
           </thead>
           <tbody>
@@ -63,6 +65,7 @@ export default class TableApi extends React.Component {
                 <td>{item.status}</td>
                 <td>{item.category}</td>
                 <td>{item.firstname + ' ' + item.lastname}</td>
+                <td><Link to={{pathname:'update/'+item.id, state: item.id}}><Button variant="secondary">Edit</Button></Link></td>
               </tr>)
               )
             }
