@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
 import { Form, Col, Button, Container } from 'react-bootstrap'
 import { withRouter } from 'react-router-dom'
-import { apiPost } from '../../api';
+import { apiPut } from '../../api';
 import { format } from 'date-fns'
 
 class FormUpdate extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      taskid: 1,
       formData: {
-        taskid: 1,
-      }
+        ...(props.tasks[0] ?? {})
+      },
     };
   }
 
@@ -18,17 +19,21 @@ class FormUpdate extends Component {
   render() {
     const handleSubmit = this.handleSubmit.bind(this);
     const handleChange = this.handleFormChange.bind(this);
+    const changeTaskId = (ev) => {
+      const taskid = parseInt(ev.target.value);
+      const task = tasks.find((task) => task.id === taskid);
+      this.setState({
+        taskid,
+        // Three dot thingie makes a copy of the task
+        formData: { ...task },
+      });
+    }
 
     const status = this.props.status;
     const persons = this.props.persons;
     const categories = this.props.categories;
     const tasks = this.props.tasks;
-    const current_id = parseInt(this.state.formData.taskid);
-
-    let currentTask = tasks.find((task) => task.id === current_id);
-    if (!currentTask && tasks.length > 0) {
-      currentTask = tasks[0]; // Default to first task if available. Might want to handle the no tasks case though
-    }
+    const formData = this.state.formData;
 
     return (
       <Container style={{ padding: "100px" }}>
@@ -38,7 +43,7 @@ class FormUpdate extends Component {
             <Form.Group as={Col} controlId="taskid">
               <Form.Label column sm={2}>Task</Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} as="select" name="taskid">
+                <Form.Control onChange={changeTaskId} as="select" name="taskid">
                   <option key="0" value="">Tasks</option>
                   {
                     tasks.map(task =>
@@ -56,7 +61,7 @@ class FormUpdate extends Component {
                 Task Name
                 </Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} value={currentTask.taskname} name="taskname" type="text" />
+                <Form.Control onChange={handleChange} value={formData.taskname} name="taskname" type="text" />
               </Col>
             </Form.Group>
           </Form.Row>
@@ -67,7 +72,7 @@ class FormUpdate extends Component {
                 Task Description
                 </Form.Label>
               <Col>
-                <Form.Control value={currentTask.taskdesc} onChange={handleChange} name="taskdesc" as="textarea" rows="4" cols="50" placeholder="Task description" />
+                <Form.Control value={formData.taskdesc} onChange={handleChange} name="taskdesc" as="textarea" rows="4" cols="50" placeholder="Task description" />
               </Col>
             </Form.Group>
           </Form.Row>
@@ -77,7 +82,7 @@ class FormUpdate extends Component {
                 Start Date
                 </Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} value={format(new Date(currentTask.startdate), 'yyyy-MM-dd')} name="startdate" type="date" />
+                <Form.Control onChange={handleChange} value={format(new Date(formData.startdate), 'yyyy-MM-dd')} name="startdate" type="date" />
               </Col>
             </Form.Group>
             <Form.Group as={Col} controlId="end_date">
@@ -85,7 +90,7 @@ class FormUpdate extends Component {
                 End Date
                 </Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} value={format(new Date(currentTask.enddate), 'yyyy-MM-dd')} name="enddate" type="date" />
+                <Form.Control onChange={handleChange} value={format(new Date(formData.enddate), 'yyyy-MM-dd')} name="enddate" type="date" />
               </Col>
             </Form.Group>
           </Form.Row>
@@ -93,7 +98,7 @@ class FormUpdate extends Component {
             <Form.Group as={Col} controlId="categories">
               <Form.Label>Category</Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} defaultValue={currentTask.categoryid} as="select" name="categoryid">
+                <Form.Control onChange={handleChange} defaultValue={formData.categoryid} as="select" name="categoryid">
                   <option key="0" value="">Categories</option>
                   {
                     categories.map(category =>
@@ -106,7 +111,7 @@ class FormUpdate extends Component {
             <Form.Group as={Col} controlId="status">
               <Form.Label>Status</Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} as="select" name="statusid" >
+                <Form.Control onChange={handleChange} value={formData.statusid} as="select" name="statusid" >
                   <option key="0" value="">Status</option>
                   {
                     status.map(status =>
@@ -119,7 +124,7 @@ class FormUpdate extends Component {
             <Form.Group as={Col} controlId="Person">
               <Form.Label>Person</Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} as="select" name="personid">
+                <Form.Control onChange={handleChange} value={formData.personid} as="select" name="personid">
                   <option key="0" value="">Person</option>
                   {
                     persons.map(person =>
@@ -141,9 +146,8 @@ class FormUpdate extends Component {
   }
 
   async handleSubmit(ev) {
-    ev.preventDefault();;
-    console.log(this.state.formData)
-    await apiPost('/tasks', this.state.formData);
+    ev.preventDefault();
+    apiPut('/tasks', this.state.formData);
 
     this.props.history.push('/');
   }

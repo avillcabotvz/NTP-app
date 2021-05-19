@@ -1,6 +1,6 @@
 import { getToken } from "./components/auth/jwt";
 
-const apiRoot = 'http://localhost:2000';
+const apiRoot = 'https://localhost:2443';
 
 function getFullPath(path) {
   // Remove "/" from beggining if present.
