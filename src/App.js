@@ -16,7 +16,7 @@ function App() {
         <Header/>
         <Switch>
           <ProtectedRoute path="/" component={Main} exact/>
-          <ProtectedRoute path="/test" component={TestSite}/>
+          <ProtectedRoute path="/add" component={TestSite}/>
           <ProtectedRoute path="/update/:id" component={Update}/>
           <ProtectedRoute path="/update" component={Update}/>
           <ProtectedRoute path="/status" component={Status}/>
@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" component={Login} />
         </Switch>
       </Router>
-      
+      <footer className="app-footer"> NTP Projekt , izradio <a href="https://github.com/avillcabotvz">Andrey Inti Villca Bozicevic</a></footer>
     </div>
   );
 }

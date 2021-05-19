@@ -14,7 +14,11 @@ const HeaderNav = (props) => {
     <Navbar.Brand as={Link} to="/">NTP Projekt</Navbar.Brand>
     <Nav className="mr-auto">
       <Nav.Link as={Link} to="/">Home</Nav.Link>
-      <Nav.Link as={Link} to="/test">Test</Nav.Link>
+      <Nav.Link as={Link} to="/add">Add Task</Nav.Link>
+      <Nav.Link as={Link} to="/update">Update Tasks</Nav.Link>
+      <Nav.Link as={Link} disabled to="/">Remove Task</Nav.Link>
+      <Nav.Link as={Link} to="/status">Add Status</Nav.Link>
+      <Nav.Link as={Link} to="/category">Add Category</Nav.Link>
     </Nav>
     {isNotLogin && <Nav className="ml-auto">
       {userData && <strong className="text-light mr-2">{userData.username}</strong>}
