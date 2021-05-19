@@ -5,7 +5,8 @@ import TestSite from './components/header/TestSite';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Main from './components/main/Main'
 import Update from './components/form/Update';
-
+import Login from './components/auth/Login';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 
 function App() {
   return (
@@ -13,9 +14,10 @@ function App() {
       <Router>
         <Header/>
         <Switch>
-          <Route path="/" component={Main} exact/>
-          <Route path="/test" component={TestSite}/>
-          <Route path="/update" component={Update}/>
+          <ProtectedRoute path="/" component={Main} exact/>
+          <ProtectedRoute path="/test" component={TestSite}/>
+          <ProtectedRoute path="/update" component={Update}/>
+          <Route path="/login" component={Login} />
         </Switch>
       </Router>
       

@@ -1,3 +1,5 @@
+import { getToken } from "./components/auth/jwt";
+
 const apiRoot = 'http://localhost:2000';
 
 function getFullPath(path) {
@@ -22,8 +24,12 @@ async function maybeDecodeJSON(response) {
 
 
 async function doRequest(method, path, bodyData = null) {
+  const authToken = getToken();
+
   const body = bodyData ? JSON.stringify(bodyData) : null;
-  const headers = bodyData ? { 'Content-Type': 'application/json' } : {};
+  const contentHeaders = bodyData ? { 'Content-Type': 'application/json' } : {};
+  const authHeaders = authToken ? { 'Authorization': `Bearer ${authToken}` } : {};
+  const headers = { ...contentHeaders, ...authHeaders };
 
   const response = await fetch(
     getFullPath(path),

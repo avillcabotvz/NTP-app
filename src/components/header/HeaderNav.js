@@ -1,7 +1,13 @@
-import {Link} from 'react-router-dom'
-import {Navbar, Nav} from 'react-bootstrap';
+import {Link, withRouter} from 'react-router-dom'
+import {Navbar, Nav, Button} from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { getTokenData, unsetToken } from '../auth/jwt';
 
-const HeaderNav = () => {
+const HeaderNav = (props) => {
+  const userData = getTokenData();
+  const isNotLogin = props.location.pathname !== '/login';
+
   return (
     <>
   <Navbar bg="dark" variant="dark">
@@ -10,9 +16,21 @@ const HeaderNav = () => {
       <Nav.Link as={Link} to="/">Home</Nav.Link>
       <Nav.Link as={Link} to="/test">Test</Nav.Link>
     </Nav>
+    {isNotLogin && <Nav className="ml-auto">
+      {userData && <strong className="text-light mr-2">{userData.username}</strong>}
+      <Button variant="danger" onClick={() => signOut(props.history)}>
+        <FontAwesomeIcon icon={faSignOutAlt} />
+        Sign out
+      </Button>
+    </Nav>}
   </Navbar>
 </>
-  )
+  );
+
+  function signOut(history) {
+    unsetToken();
+    history.push('/login');
+  }
 }
 
-export default HeaderNav
+export default withRouter(HeaderNav);
