@@ -1,8 +1,7 @@
 import React from 'react'
-import { Table, Spinner, Button, Container } from 'react-bootstrap'
+import { Table, Spinner, Container } from 'react-bootstrap'
 import { format } from 'date-fns'
 import { apiGet } from '../../api';
-
 
 export default class TableApi extends React.Component {
   constructor(props) {
@@ -36,8 +35,6 @@ export default class TableApi extends React.Component {
         </Spinner>
       )
     }
-    // Ako si gore return kad je loading, ovdje ti ne treba opet if sa istim uvjetom, sigurno je returnao
-    // Those are known as "guard clauses"
 
     const { tasks } = this.state;
 
@@ -53,7 +50,6 @@ export default class TableApi extends React.Component {
               <th>Status</th>
               <th>Category</th>
               <th>Person</th>
-              <th>...</th>
             </tr>
           </thead>
           <tbody>
@@ -66,8 +62,7 @@ export default class TableApi extends React.Component {
                 <td>{format(new Date(item.enddate), 'MM/dd/yyyy')}</td>
                 <td>{item.status}</td>
                 <td>{item.category}</td>
-                <td>{item.firstname + ' ' + item.lastname}</td>              
-                <td><Button variant="secondary">Edit</Button></td>
+                <td>{item.firstname + ' ' + item.lastname}</td>
               </tr>)
               )
             }

@@ -1,4 +1,3 @@
-// Ovo idealno strpas u neki config file al nisam ti htio komplicirat
 const apiRoot = 'http://localhost:2000';
 
 function getFullPath(path) {
@@ -21,11 +20,10 @@ async function maybeDecodeJSON(response) {
   }
 }
 
-// GET, DELETE, POST, PATCH, PUT are literally the same logic, just different method.
-// They just call this and pass a different method parameter and the body is optional
-async function doRequest(method, path, postData = null) {
-  const body = postData ? JSON.stringify(postData) : null;
-  const headers = postData ? { 'Content-Type': 'application/json' } : {};
+
+async function doRequest(method, path, bodyData = null) {
+  const body = bodyData ? JSON.stringify(bodyData) : null;
+  const headers = bodyData ? { 'Content-Type': 'application/json' } : {};
 
   const response = await fetch(
     getFullPath(path),
@@ -35,8 +33,6 @@ async function doRequest(method, path, postData = null) {
   return maybeDecodeJSON(response);
 }
 
-// These are all async, although no async keyword
-// It's because they return the Promise from doRequest
 export const apiGet = (path) => doRequest('GET', path);
 export const apiDelete = (path) => doRequest('DELETE', path);
 export const apiPost = (path, body) => doRequest('POST', path, body);

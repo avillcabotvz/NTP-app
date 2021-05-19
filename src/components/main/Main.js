@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Row, Col, Container, ButtonGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTasks, faTrash, faUser, faExclamationCircle,faSitemap} from '@fortawesome/free-solid-svg-icons'
+import { faTasks, faTrash, faUser, faExclamationCircle,faSitemap, faEdit} from '@fortawesome/free-solid-svg-icons'
 import {Link} from 'react-router-dom'
 import TableApi from './TableApi'
 
@@ -14,8 +14,12 @@ const Main = (props) => {
             <div className="mb-2"><Button variant="dark" size="lg" block as={Link} to="/test"> <FontAwesomeIcon icon={faTasks} /><div className="button-text">Add Task</div></Button></div>
           </Col>
           <Col className="p-3">
+            <div className="mb-2"><Button variant="dark"  size="lg" block as={Link} to="/update"> <FontAwesomeIcon icon={faEdit} /><div className="button-text">Update Task</div></Button></div>
+          </Col>
+          <Col className="p-3">
             <div className="mb-2"><Button variant="dark"  size="lg" block> <FontAwesomeIcon icon={faTrash} /><div className="button-text">Remove Task</div></Button></div>
           </Col>
+         
         </Row>
 
         <Row>

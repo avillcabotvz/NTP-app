@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { apiGet } from '../../api';
 import FormThing from './FormThing'
+import FormUpdate from './FormUpdate';
 
 export default class FormFunctions extends Component {
 
@@ -12,6 +13,7 @@ export default class FormFunctions extends Component {
       categories: [],
       persons: [],
       status: [],
+      tasks: [],
     }
   }
 
@@ -22,17 +24,19 @@ export default class FormFunctions extends Component {
   async fetchData() {
     this.setState({ loading: true });
 
-    const [categories, persons, status] = await Promise.all([
+    const [categories, persons, status,tasks] = await Promise.all([
       apiGet('/categories'),
       apiGet('/person'),
       apiGet('/status'),
+      apiGet('/tasks')
     ]);
 
     this.setState({
       loading: false,
       categories,
       persons,
-      status
+      status,
+      tasks
     });
   }
 
@@ -45,12 +49,22 @@ export default class FormFunctions extends Component {
       );
     }
 
-    const { status, persons, categories } = this.state;
+    const { status, persons, categories, tasks } = this.state;
+    
+    if (this.props.edit === true) {
+      return (
+        <div>
+          <FormUpdate tasks={tasks} status={status} persons={persons} categories={categories} />
+        </div>
+      );
+    }
 
-    return (
-      <div>
-        <FormThing status={status} persons={persons} categories={categories} />
-      </div>
-    );
+    else {
+      return (
+        <div>
+          <FormThing status={status} persons={persons} categories={categories} />
+        </div>
+      );
+    }
   }
 }
