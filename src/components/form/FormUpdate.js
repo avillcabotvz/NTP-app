@@ -23,9 +23,12 @@ class FormUpdate extends Component {
     const persons = this.props.persons;
     const categories = this.props.categories;
     const tasks = this.props.tasks;
-    const current_id = (this.state.formData.taskid==0)?'1':this.state.formData.taskid-1;
-    console.log(current_id);
-    console.log(tasks[current_id])
+    const current_id = parseInt(this.state.formData.taskid);
+
+    let currentTask = tasks.find((task) => task.id === current_id);
+    if (!currentTask && tasks.length > 0) {
+      currentTask = tasks[0]; // Default to first task if available. Might want to handle the no tasks case though
+    }
 
     return (
       <Container style={{ padding: "100px" }}>
@@ -53,7 +56,7 @@ class FormUpdate extends Component {
                 Task Name
                 </Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} value={tasks[current_id].taskname} name="taskname" type="text" />
+                <Form.Control onChange={handleChange} value={currentTask.taskname} name="taskname" type="text" />
               </Col>
             </Form.Group>
           </Form.Row>
@@ -64,7 +67,7 @@ class FormUpdate extends Component {
                 Task Description
                 </Form.Label>
               <Col>
-                <Form.Control value={tasks[current_id].taskdesc} onChange={handleChange} name="taskdesc" as="textarea" rows="4" cols="50" placeholder="Task description" />
+                <Form.Control value={currentTask.taskdesc} onChange={handleChange} name="taskdesc" as="textarea" rows="4" cols="50" placeholder="Task description" />
               </Col>
             </Form.Group>
           </Form.Row>
@@ -74,7 +77,7 @@ class FormUpdate extends Component {
                 Start Date
                 </Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} value={format(new Date(tasks[current_id].startdate), 'yyyy-MM-dd')} name="startdate" type="date" />
+                <Form.Control onChange={handleChange} value={format(new Date(currentTask.startdate), 'yyyy-MM-dd')} name="startdate" type="date" />
               </Col>
             </Form.Group>
             <Form.Group as={Col} controlId="end_date">
@@ -82,7 +85,7 @@ class FormUpdate extends Component {
                 End Date
                 </Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} value={format(new Date(tasks[current_id].enddate), 'yyyy-MM-dd')} name="enddate" type="date" />
+                <Form.Control onChange={handleChange} value={format(new Date(currentTask.enddate), 'yyyy-MM-dd')} name="enddate" type="date" />
               </Col>
             </Form.Group>
           </Form.Row>
@@ -90,7 +93,7 @@ class FormUpdate extends Component {
             <Form.Group as={Col} controlId="categories">
               <Form.Label>Category</Form.Label>
               <Col>
-                <Form.Control onChange={handleChange} DefaultValue={tasks[current_id].categoryid} as="select" name="categoryid">
+                <Form.Control onChange={handleChange} defaultValue={currentTask.categoryid} as="select" name="categoryid">
                   <option key="0" value="">Categories</option>
                   {
                     categories.map(category =>
