@@ -29,8 +29,8 @@ const Main = (props) => {
 
         <Row>
           <ButtonGroup size="lg" as={Col}>
-              <Button variant="dark"> <FontAwesomeIcon icon={faUser} /><div className="button-text">Add Person</div></Button>
-              <Button variant="dark"> <FontAwesomeIcon icon={faSitemap} /><div className="button-text">Add Category</div></Button>
+              <Button as={Link} to="/person" variant="dark"> <FontAwesomeIcon icon={faUser} /><div className="button-text">Add Person</div></Button>
+              <Button as={Link} to="/category" variant="dark"> <FontAwesomeIcon icon={faSitemap} /><div className="button-text">Add Category</div></Button>
               <Button as={Link} to="/status" variant="dark"> <FontAwesomeIcon icon={faExclamationCircle} /><div className="button-text">Add Status</div></Button>
               <ReactToPrint
                 trigger={() => 

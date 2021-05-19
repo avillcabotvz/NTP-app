@@ -19,7 +19,7 @@ class FormThing extends Component {
     const status = this.props.status;
     const persons = this.props.persons;
     const categories = this.props.categories;
-    console.log(this.props);
+    console.log(this.state);
 
 
     return (
