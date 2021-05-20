@@ -150,7 +150,7 @@ class FormUpdate extends Component {
 
   async handleSubmit(ev) {
     ev.preventDefault();
-    apiPut(`/tasks/${this.state.taskid}`, this.state.formData);
+    await apiPut(`/tasks/${this.state.taskid}`, this.state.formData);
 
     this.props.history.push('/');
   }
