@@ -7,10 +7,13 @@ import { format } from 'date-fns'
 class FormUpdate extends Component {
   constructor(props) {
     super(props);
+
+    const taskid = props.match.params.id ? parseInt(props.match.params.id) : 0;
+    const currentTask = taskid ? props.tasks.find((task) => task.id === taskid) : props.tasks[0];
     this.state = {
-      taskid: 0,
+      taskid,
       formData: {
-        ...(props.match.params.id?props.tasks.find((task) => task.id === parseInt(props.match.params.id)):props.tasks[0] ?? {})
+        ...(currentTask ?? {})
       },
     };
   }
