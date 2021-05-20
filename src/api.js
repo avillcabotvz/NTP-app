@@ -17,11 +17,11 @@ async function maybeDecodeJSON(response) {
     return await response.json();
   } else {
     // Otherwise don't!
-    console.warn(`Got non-JSON response from API: `, response.text());
-    return response.text();
+    const textContent = await response.text();
+    console.warn(`Got non-JSON response from API: `, textContent);
+    return textContent;
   }
 }
-
 
 async function doRequest(method, path, bodyData = null) {
   const authToken = getToken();
