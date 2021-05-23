@@ -21,7 +21,7 @@ const Main = (props) => {
             <div className="mb-2"><Button variant="dark"  size="lg" block as={Link} to="/update"> <FontAwesomeIcon icon={faEdit} /><div className="button-text">Update Task</div></Button></div>
           </Col>
           <Col className="p-3">
-            <div className="mb-2"><Button variant="dark"  size="lg" block disabled> <FontAwesomeIcon icon={faTrash} /><div className="button-text">Remove Task</div></Button></div>
+            <div className="mb-2"><Button variant="dark"  size="lg" block as={Link} to="/delete"> <FontAwesomeIcon icon={faTrash} /><div className="button-text">Remove Task</div></Button></div>
           </Col>
          
          

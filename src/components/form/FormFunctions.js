@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { apiGet } from '../../api';
+import FormDelete from './FormDelete';
 import FormThing from './FormThing'
 import FormUpdate from './FormUpdate';
 
@@ -54,6 +55,14 @@ export default class FormFunctions extends Component {
       return (
         <div>
           <FormUpdate tasks={tasks} status={status} persons={persons} categories={categories} />
+        </div>
+      );
+    }
+
+    if (this.props.delete === true) {
+      return (
+        <div>
+          <FormDelete tasks={tasks} />
         </div>
       );
     }

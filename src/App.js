@@ -7,7 +7,7 @@ import Main from './components/main/Main'
 import Update from './components/form/Update';
 import Login from './components/auth/Login';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import {Status,Category,Person} from './components/form/Add';
+import {Status,Category,Person, DeleteTask} from './components/form/Add';
 
 function App() {
   return (
@@ -22,10 +22,10 @@ function App() {
           <ProtectedRoute path="/status" component={Status}/>
           <ProtectedRoute path="/category" component={Category}/>
           <ProtectedRoute path="/person" component={Person}/>
+          <ProtectedRoute path="/delete" component={DeleteTask}/>
           <Route path="/login" component={Login} />
         </Switch>
       </Router>
-      <footer className="app-footer"> NTP Projekt , izradio <a href="https://github.com/avillcabotvz">Andrey Inti Villca Bozicevic</a></footer>
     </div>
   );
 }
